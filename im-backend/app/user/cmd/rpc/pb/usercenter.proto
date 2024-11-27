@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+// model
+message User {
+  bytes userID = 1;
+  string userName = 2;
+  string email = 3;
+  string phone = 4;
+}
+
+message UserProfile {
+  bytes userID = 1;
+  string avatarURL = 2;
+  int32 onlineStatus = 3;
+  string bio = 4;
+  string birthday = 5;
+  string gender = 6;
+  string location = 7;
+  string lastSeenAt = 8;
+}
+
+// req, resp
+message RegisterReq {
+  string userName = 1;
+  string password = 2;
+  string email = 3;
+  string phone = 4;
+}
+
+message RegisterResp {
+  string accessToken = 1;
+  int64 accessExpire = 2;
+  int64 refreshAfter = 3;
+}
+
+message LoginReq {
+  string phone = 1;
+  string password = 2;
+}
+
+message LoginResp {
+  string accessToken = 1;
+  int64 accessExpire = 2;
+  int64 refreshAfter = 3;
+}
+
+message GetUserReq { bytes userID = 1; }
+
+message GetUserResp { UserProfile userPro = 1; }
+
+message GenerateTokenReq { bytes userID = 1; }
+
+message GenerateTokenResp {
+  string accessToken = 1;
+  int64 accessExpire = 2;
+  int64 refreshAfter = 3;
+}
+
+service usercenter {
+  rpc register(RegisterReq) returns (RegisterResp);
+  rpc login(LoginReq) returns (LoginResp);
+  rpc getUser(GetUserReq) returns (GetUserResp);
+  rpc generateToken(GenerateTokenReq) returns (GenerateTokenResp);
+}

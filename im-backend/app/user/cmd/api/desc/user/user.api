@@ -1,0 +1,63 @@
+syntax = "v1"
+
+info(
+	title: "用户服务"
+	desc: "用户服务"
+	author: "zccccc01"
+	email: "cailanzi01@qq.com"
+)
+
+type User {
+	UserID   []byte `json:"user_id"`
+	UserName string `json:"username"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+}
+
+type UserProfile {
+	UserID       []byte `json:"user_id"`
+	AvatarURL    string `json:"avatar_url"`
+	OnlineStatus int32  `json:"online_status"` // 0: offline, 1: online
+	Bio          string `json:"bio"`           // Short biography or status message
+	Birthday     string `json:"birthday"`      // Users date of birth
+	Gender       string `json:"gender"`        // User gender
+	Location     string `json:"location"`      // Users location or timezone
+	LastSeenAt   string `json:"last_seen_at"`  // Last seen timestamp for the user
+}
+
+type (
+	RegisterReq {
+		UserName string `json:"username"`
+		Password string `json:"password"`
+		Email    string `json:"email"`
+		Phone    string `json:"phone"`
+	}
+
+	RegisterResp {
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+)
+
+type (
+	LoginReq {
+		Phone    string `json:"phone"`
+		Password string `json:"password"`
+	}
+
+	LoginResp {
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+		RefreshAfter int64  `json:"refresh_after"`
+	}
+)
+
+type (
+	UserInfoReq {
+	}
+
+	UserInfoResp {
+		UserInfo UserProfile `json:"user_info"`
+	}
+)

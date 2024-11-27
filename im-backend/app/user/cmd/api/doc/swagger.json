@@ -1,0 +1,283 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "用户服务",
+    "description": "用户服务",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/user/info": {
+      "get": {
+        "summary": "get user info",
+        "operationId": "getUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserInfoResp"
+            }
+          }
+        },
+        "tags": [
+          "usercenter"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "summary": "login",
+        "operationId": "login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "tags": [
+          "usercenter"
+        ]
+      }
+    },
+    "/api/v1/user/register": {
+      "post": {
+        "summary": "register",
+        "operationId": "register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegisterResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "tags": [
+          "usercenter"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "phone",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "access_expire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refresh_after": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "access_token",
+        "access_expire",
+        "refresh_after"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "username",
+        "password",
+        "email",
+        "phone"
+      ]
+    },
+    "RegisterResp": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "access_expire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refresh_after": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "RegisterResp",
+      "required": [
+        "access_token",
+        "access_expire",
+        "refresh_after"
+      ]
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/byte"
+          }
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "title": "User",
+      "required": [
+        "user_id",
+        "username",
+        "email",
+        "phone"
+      ]
+    },
+    "UserInfoReq": {
+      "type": "object",
+      "title": "UserInfoReq"
+    },
+    "UserInfoResp": {
+      "type": "object",
+      "properties": {
+        "user_info": {
+          "$ref": "#/definitions/UserProfile"
+        }
+      },
+      "title": "UserInfoResp",
+      "required": [
+        "user_info"
+      ]
+    },
+    "UserProfile": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/byte"
+          }
+        },
+        "avatar_url": {
+          "type": "string"
+        },
+        "online_status": {
+          "type": "integer",
+          "format": "int32",
+          "description": " 0: offline, 1: online"
+        },
+        "bio": {
+          "type": "string",
+          "description": " Short biography or status message"
+        },
+        "birthday": {
+          "type": "string",
+          "description": " Users date of birth"
+        },
+        "gender": {
+          "type": "string",
+          "description": " User gender"
+        },
+        "location": {
+          "type": "string",
+          "description": " Users location or timezone"
+        },
+        "last_seen_at": {
+          "type": "string",
+          "description": " Last seen timestamp for the user"
+        }
+      },
+      "title": "UserProfile",
+      "required": [
+        "user_id",
+        "avatar_url",
+        "online_status",
+        "bio",
+        "birthday",
+        "gender",
+        "location",
+        "last_seen_at"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}

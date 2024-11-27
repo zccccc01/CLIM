@@ -1,0 +1,12 @@
+Name: usercenter.rpc
+ListenOn: 0.0.0.0:2004
+# Etcd:
+#   Hosts:
+#     - 127.0.0.1:2379
+#   Key: usercenter.rpc
+MySQL:
+  DataSource: root:123456@tcp(127.0.0.1:3306)/user_db?charset=utf8mb4&parseTime=True&loc=Local
+
+JwtAuth:
+  AccessSecret: ae0536f9-6450-4606-8e13-5a19ed505da0
+  AccessExpire: 31536000
