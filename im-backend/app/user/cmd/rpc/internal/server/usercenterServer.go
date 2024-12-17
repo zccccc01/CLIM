@@ -38,6 +38,31 @@ func (s *UsercenterServer) GetUser(ctx context.Context, in *pb.GetUserReq) (*pb.
 	return l.GetUser(in)
 }
 
+func (s *UsercenterServer) ChangePwd(ctx context.Context, in *pb.ChangePwdReq) (*pb.ChangePwdResp, error) {
+	l := logic.NewChangePwdLogic(ctx, s.svcCtx)
+	return l.ChangePwd(in)
+}
+
+func (s *UsercenterServer) UpdateUserInfo(ctx context.Context, in *pb.UpdateUserInfoReq) (*pb.UpdateUserInfoResp, error) {
+	l := logic.NewUpdateUserInfoLogic(ctx, s.svcCtx)
+	return l.UpdateUserInfo(in)
+}
+
+func (s *UsercenterServer) SetUserProfile(ctx context.Context, in *pb.SetUserProfileReq) (*pb.SetUserProfileResp, error) {
+	l := logic.NewSetUserProfileLogic(ctx, s.svcCtx)
+	return l.SetUserProfile(in)
+}
+
+func (s *UsercenterServer) GetUserProfile(ctx context.Context, in *pb.GetUserProfileReq) (*pb.GetUserProfileResp, error) {
+	l := logic.NewGetUserProfileLogic(ctx, s.svcCtx)
+	return l.GetUserProfile(in)
+}
+
+func (s *UsercenterServer) UpdateUserProfile(ctx context.Context, in *pb.UpdateUserProfileReq) (*pb.UpdateUserProfileResp, error) {
+	l := logic.NewUpdateUserProfileLogic(ctx, s.svcCtx)
+	return l.UpdateUserProfile(in)
+}
+
 func (s *UsercenterServer) GenerateToken(ctx context.Context, in *pb.GenerateTokenReq) (*pb.GenerateTokenResp, error) {
 	l := logic.NewGenerateTokenLogic(ctx, s.svcCtx)
 	return l.GenerateToken(in)

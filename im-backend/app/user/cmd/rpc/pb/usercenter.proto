@@ -50,7 +50,36 @@ message LoginResp {
 
 message GetUserReq { bytes userID = 1; }
 
-message GetUserResp { UserProfile userPro = 1; }
+message GetUserResp { User user = 1; }
+
+message ChangePwdReq {
+  string phone = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}
+
+message ChangePwdResp {}
+
+message UpdateUserInfoReq {
+  bytes userID = 1;
+  string userName = 2;
+  string email = 3;
+  string phone = 4;
+}
+
+message UpdateUserInfoResp {}
+
+message SetUserProfileReq { UserProfile userProfile = 1; }
+
+message SetUserProfileResp {}
+
+message GetUserProfileReq { bytes userID = 1; }
+
+message GetUserProfileResp { UserProfile userProfile = 1; }
+
+message UpdateUserProfileReq { UserProfile userProfile = 1; }
+
+message UpdateUserProfileResp {}
 
 message GenerateTokenReq { bytes userID = 1; }
 
@@ -64,5 +93,10 @@ service usercenter {
   rpc register(RegisterReq) returns (RegisterResp);
   rpc login(LoginReq) returns (LoginResp);
   rpc getUser(GetUserReq) returns (GetUserResp);
+  rpc changePwd(ChangePwdReq) returns (ChangePwdResp);
+  rpc updateUserInfo(UpdateUserInfoReq) returns (UpdateUserInfoResp);
+  rpc setUserProfile(SetUserProfileReq) returns (SetUserProfileResp);
+  rpc getUserProfile(GetUserProfileReq) returns (GetUserProfileResp);
+  rpc updateUserProfile(UpdateUserProfileReq) returns (UpdateUserProfileResp);
   rpc generateToken(GenerateTokenReq) returns (GenerateTokenResp);
 }

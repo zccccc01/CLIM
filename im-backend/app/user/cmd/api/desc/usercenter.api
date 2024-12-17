@@ -30,6 +30,12 @@ service usercenter {
 	)
 	@handler login
 	post /login (LoginReq) returns (LoginResp)
+
+	@doc (
+		summary: "change pwd"
+	)
+	@handler changePwd
+	put /changePwd (ChangePwdReq) returns (ChangePwdResp)
 }
 
 //need login
@@ -44,5 +50,29 @@ service usercenter {
 	)
 	@handler getUserInfo
 	get /info (UserInfoReq) returns (UserInfoResp)
+
+	@doc (
+		summary: "update user info"
+	)
+	@handler updateUserInfo
+	put /info (UpdateUserInfoReq) returns (UpdateUserInfoResp)
+
+	@doc (
+		summary: "set userProfile"
+	)
+	@handler setUserProfile
+	post /user-profile (SetUserProfileReq) returns (SetUserProfileResp)
+
+	@doc (
+		summary: "get userProfile"
+	)
+	@handler getUserProfile
+	get /user-profile (UserProfileReq) returns (UserProfileResp)
+
+	@doc (
+		summary: "update userProfile"
+	)
+	@handler updateUserProfile
+	put /user-profile (UpdateUserProfileReq) returns (UpdateUserProfileResp)
 }
 

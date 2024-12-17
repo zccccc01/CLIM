@@ -3,6 +3,15 @@
 
 package types
 
+type ChangePwdReq struct {
+	Phone       string `json:"phone"`
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
+}
+
+type ChangePwdResp struct {
+}
+
 type LoginReq struct {
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
@@ -27,6 +36,29 @@ type RegisterResp struct {
 	RefreshAfter int64  `json:"refresh_after"`
 }
 
+type SetUserProfileReq struct {
+	UserProfile UserProfile `json:"user_profile"`
+}
+
+type SetUserProfileResp struct {
+}
+
+type UpdateUserInfoReq struct {
+	UserName string `json:"username"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+}
+
+type UpdateUserInfoResp struct {
+}
+
+type UpdateUserProfileReq struct {
+	UserProfile UserProfile `json:"user_profile"`
+}
+
+type UpdateUserProfileResp struct {
+}
+
 type User struct {
 	UserID   []byte `json:"user_id"`
 	UserName string `json:"username"`
@@ -38,11 +70,10 @@ type UserInfoReq struct {
 }
 
 type UserInfoResp struct {
-	UserInfo UserProfile `json:"user_info"`
+	UserInfo User `json:"user_info"`
 }
 
 type UserProfile struct {
-	UserID       []byte `json:"user_id"`
 	AvatarURL    string `json:"avatar_url"`
 	OnlineStatus int32  `json:"online_status"` // 0: offline, 1: online
 	Bio          string `json:"bio"`           // Short biography or status message
@@ -50,4 +81,11 @@ type UserProfile struct {
 	Gender       string `json:"gender"`        // User gender
 	Location     string `json:"location"`      // Users location or timezone
 	LastSeenAt   string `json:"last_seen_at"`  // Last seen timestamp for the user
+}
+
+type UserProfileReq struct {
+}
+
+type UserProfileResp struct {
+	UserProfile UserProfile `json:"user_profile"`
 }

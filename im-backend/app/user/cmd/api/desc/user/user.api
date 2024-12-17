@@ -15,7 +15,6 @@ type User {
 }
 
 type UserProfile {
-	UserID       []byte `json:"user_id"`
 	AvatarURL    string `json:"avatar_url"`
 	OnlineStatus int32  `json:"online_status"` // 0: offline, 1: online
 	Bio          string `json:"bio"`           // Short biography or status message
@@ -58,6 +57,55 @@ type (
 	}
 
 	UserInfoResp {
-		UserInfo UserProfile `json:"user_info"`
+		UserInfo User `json:"user_info"`
+	}
+)
+
+type (
+	ChangePwdReq {
+		Phone       string `json:"phone"`
+		OldPassword string `json:"old_password"`
+		NewPassword string `json:"new_password"`
+	}
+
+	ChangePwdResp {
+	}
+)
+
+type (
+	UpdateUserInfoReq {
+		UserName string `json:"username"`
+		Email    string `json:"email"`
+		Phone    string `json:"phone"`
+	}
+
+	UpdateUserInfoResp {
+	}
+)
+
+type (
+	SetUserProfileReq {
+		UserProfile UserProfile `json:"user_profile"`
+	}
+
+	SetUserProfileResp {
+	}
+)
+
+type (
+	UserProfileReq {
+	}
+
+	UserProfileResp {
+		UserProfile UserProfile `json:"user_profile"`
+	}
+)
+
+type (
+	UpdateUserProfileReq {
+		UserProfile UserProfile `json:"user_profile"`
+	}
+
+	UpdateUserProfileResp {
 	}
 )

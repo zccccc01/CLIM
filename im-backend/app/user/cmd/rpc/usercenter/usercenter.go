@@ -14,21 +14,36 @@ import (
 )
 
 type (
-	GenerateTokenReq  = pb.GenerateTokenReq
-	GenerateTokenResp = pb.GenerateTokenResp
-	GetUserReq        = pb.GetUserReq
-	GetUserResp       = pb.GetUserResp
-	LoginReq          = pb.LoginReq
-	LoginResp         = pb.LoginResp
-	RegisterReq       = pb.RegisterReq
-	RegisterResp      = pb.RegisterResp
-	User              = pb.User
-	UserProfile       = pb.UserProfile
+	ChangePwdReq          = pb.ChangePwdReq
+	ChangePwdResp         = pb.ChangePwdResp
+	GenerateTokenReq      = pb.GenerateTokenReq
+	GenerateTokenResp     = pb.GenerateTokenResp
+	GetUserProfileReq     = pb.GetUserProfileReq
+	GetUserProfileResp    = pb.GetUserProfileResp
+	GetUserReq            = pb.GetUserReq
+	GetUserResp           = pb.GetUserResp
+	LoginReq              = pb.LoginReq
+	LoginResp             = pb.LoginResp
+	RegisterReq           = pb.RegisterReq
+	RegisterResp          = pb.RegisterResp
+	SetUserProfileReq     = pb.SetUserProfileReq
+	SetUserProfileResp    = pb.SetUserProfileResp
+	UpdateUserInfoReq     = pb.UpdateUserInfoReq
+	UpdateUserInfoResp    = pb.UpdateUserInfoResp
+	UpdateUserProfileReq  = pb.UpdateUserProfileReq
+	UpdateUserProfileResp = pb.UpdateUserProfileResp
+	User                  = pb.User
+	UserProfile           = pb.UserProfile
 
 	Usercenter interface {
 		Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 		Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 		GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*GetUserResp, error)
+		ChangePwd(ctx context.Context, in *ChangePwdReq, opts ...grpc.CallOption) (*ChangePwdResp, error)
+		UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
+		SetUserProfile(ctx context.Context, in *SetUserProfileReq, opts ...grpc.CallOption) (*SetUserProfileResp, error)
+		GetUserProfile(ctx context.Context, in *GetUserProfileReq, opts ...grpc.CallOption) (*GetUserProfileResp, error)
+		UpdateUserProfile(ctx context.Context, in *UpdateUserProfileReq, opts ...grpc.CallOption) (*UpdateUserProfileResp, error)
 		GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 	}
 
@@ -56,6 +71,31 @@ func (m *defaultUsercenter) Login(ctx context.Context, in *LoginReq, opts ...grp
 func (m *defaultUsercenter) GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*GetUserResp, error) {
 	client := pb.NewUsercenterClient(m.cli.Conn())
 	return client.GetUser(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) ChangePwd(ctx context.Context, in *ChangePwdReq, opts ...grpc.CallOption) (*ChangePwdResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.ChangePwd(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserInfo(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) SetUserProfile(ctx context.Context, in *SetUserProfileReq, opts ...grpc.CallOption) (*SetUserProfileResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.SetUserProfile(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) GetUserProfile(ctx context.Context, in *GetUserProfileReq, opts ...grpc.CallOption) (*GetUserProfileResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.GetUserProfile(ctx, in, opts...)
+}
+
+func (m *defaultUsercenter) UpdateUserProfile(ctx context.Context, in *UpdateUserProfileReq, opts ...grpc.CallOption) (*UpdateUserProfileResp, error) {
+	client := pb.NewUsercenterClient(m.cli.Conn())
+	return client.UpdateUserProfile(ctx, in, opts...)
 }
 
 func (m *defaultUsercenter) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {

@@ -22,6 +22,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	}
 	return &ServiceContext{
 		Config: c,
-		DB:     db,
+		DB:     db.Debug(),
 	}
 }

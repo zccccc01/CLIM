@@ -16,6 +16,33 @@
     "application/json"
   ],
   "paths": {
+    "/api/v1/user/changePwd": {
+      "put": {
+        "summary": "change pwd",
+        "operationId": "changePwd",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ChangePwdResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePwdReq"
+            }
+          }
+        ],
+        "tags": [
+          "usercenter"
+        ]
+      }
+    },
     "/api/v1/user/info": {
       "get": {
         "summary": "get user info",
@@ -28,6 +55,36 @@
             }
           }
         },
+        "tags": [
+          "usercenter"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "update user info",
+        "operationId": "updateUserInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserInfoReq"
+            }
+          }
+        ],
         "tags": [
           "usercenter"
         ],
@@ -91,9 +148,115 @@
           "usercenter"
         ]
       }
+    },
+    "/api/v1/user/user-profile": {
+      "get": {
+        "summary": "get userProfile",
+        "operationId": "getUserProfile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UserProfileResp"
+            }
+          }
+        },
+        "tags": [
+          "usercenter"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "set userProfile",
+        "operationId": "setUserProfile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/SetUserProfileResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SetUserProfileReq"
+            }
+          }
+        ],
+        "tags": [
+          "usercenter"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "update userProfile",
+        "operationId": "updateUserProfile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UpdateUserProfileResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserProfileReq"
+            }
+          }
+        ],
+        "tags": [
+          "usercenter"
+        ],
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
+    "ChangePwdReq": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string"
+        },
+        "old_password": {
+          "type": "string"
+        },
+        "new_password": {
+          "type": "string"
+        }
+      },
+      "title": "ChangePwdReq",
+      "required": [
+        "phone",
+        "old_password",
+        "new_password"
+      ]
+    },
+    "ChangePwdResp": {
+      "type": "object",
+      "title": "ChangePwdResp"
+    },
     "LoginReq": {
       "type": "object",
       "properties": {
@@ -178,6 +341,62 @@
         "refresh_after"
       ]
     },
+    "SetUserProfileReq": {
+      "type": "object",
+      "properties": {
+        "user_profile": {
+          "$ref": "#/definitions/UserProfile"
+        }
+      },
+      "title": "SetUserProfileReq",
+      "required": [
+        "user_profile"
+      ]
+    },
+    "SetUserProfileResp": {
+      "type": "object",
+      "title": "SetUserProfileResp"
+    },
+    "UpdateUserInfoReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      },
+      "title": "UpdateUserInfoReq",
+      "required": [
+        "username",
+        "email",
+        "phone"
+      ]
+    },
+    "UpdateUserInfoResp": {
+      "type": "object",
+      "title": "UpdateUserInfoResp"
+    },
+    "UpdateUserProfileReq": {
+      "type": "object",
+      "properties": {
+        "user_profile": {
+          "$ref": "#/definitions/UserProfile"
+        }
+      },
+      "title": "UpdateUserProfileReq",
+      "required": [
+        "user_profile"
+      ]
+    },
+    "UpdateUserProfileResp": {
+      "type": "object",
+      "title": "UpdateUserProfileResp"
+    },
     "User": {
       "type": "object",
       "properties": {
@@ -213,7 +432,7 @@
       "type": "object",
       "properties": {
         "user_info": {
-          "$ref": "#/definitions/UserProfile"
+          "$ref": "#/definitions/User"
         }
       },
       "title": "UserInfoResp",
@@ -224,12 +443,6 @@
     "UserProfile": {
       "type": "object",
       "properties": {
-        "user_id": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/byte"
-          }
-        },
         "avatar_url": {
           "type": "string"
         },
@@ -261,7 +474,6 @@
       },
       "title": "UserProfile",
       "required": [
-        "user_id",
         "avatar_url",
         "online_status",
         "bio",
@@ -269,6 +481,22 @@
         "gender",
         "location",
         "last_seen_at"
+      ]
+    },
+    "UserProfileReq": {
+      "type": "object",
+      "title": "UserProfileReq"
+    },
+    "UserProfileResp": {
+      "type": "object",
+      "properties": {
+        "user_profile": {
+          "$ref": "#/definitions/UserProfile"
+        }
+      },
+      "title": "UserProfileResp",
+      "required": [
+        "user_profile"
       ]
     }
   },

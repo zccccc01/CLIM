@@ -29,28 +29,24 @@ func NewGetUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserLo
 func (l *GetUserLogic) GetUser(in *pb.GetUserReq) (*pb.GetUserResp, error) {
 	// 检查 userID 是否有效
 	if in.UserID == nil {
-		l.Logger.Error("userID is missing or invalid")
+		l.Logger.Debug("userID is missing or invalid")
 		return nil, errors.New("userID is missing or invalid")
 	}
 
 	// 1. 查询用户信息
-	var userPro model.UserProfile
-	result := l.svcCtx.DB.Where("user_id = ?", in.UserID).First(&userPro)
+	var user model.User
+	result := l.svcCtx.DB.Where("user_id = ?", in.UserID).First(&user)
 	if result.Error != nil {
-		l.Logger.Info("failure to get user info, err: ", result.Error)
+		l.Logger.Debug("failure to get user info, err: ", result.Error)
 		return nil, result.Error
 	}
 
 	return &usercenter.GetUserResp{
-		UserPro: &pb.UserProfile{
-			UserID:       userPro.UserID,
-			AvatarURL:    userPro.AvatarURL,
-			OnlineStatus: userPro.OnlineStatus,
-			Bio:          userPro.Bio,
-			Birthday:     userPro.Birthday.String(),
-			Gender:       userPro.Gender,
-			Location:     userPro.Location,
-			LastSeenAt:   userPro.LastSeenAt.String(),
+		User: &pb.User{
+			UserID:   user.UserID,
+			UserName: user.Username,
+			Email:    user.Email,
+			Phone:    user.Phone,
 		},
 	}, nil
 }

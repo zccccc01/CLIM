@@ -12,22 +12,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type GetUserInfoLogic struct {
+type UpdateUserInfoLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-// get user info
-func NewGetUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetUserInfoLogic {
-	return &GetUserInfoLogic{
+// update user info
+func NewUpdateUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateUserInfoLogic {
+	return &UpdateUserInfoLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *GetUserInfoLogic) GetUserInfo(req *types.UserInfoReq) (resp *types.UserInfoResp, err error) {
+func (l *UpdateUserInfoLogic) UpdateUserInfo(req *types.UpdateUserInfoReq) (resp *types.UpdateUserInfoResp, err error) {
 	userID, err := ctxdata.GetUidFromCtx(l.ctx)
 	if err != nil {
 		return nil, err
@@ -39,21 +39,15 @@ func (l *GetUserInfoLogic) GetUserInfo(req *types.UserInfoReq) (resp *types.User
 		return nil, errors.New("userID is missing or invalid")
 	}
 
-	getUserInfoLogic, err := l.svcCtx.UsercenterRpc.GetUser(l.ctx, &usercenter.GetUserReq{
-		UserID: userID,
+	_, err = l.svcCtx.UsercenterRpc.UpdateUserInfo(l.ctx, &usercenter.UpdateUserInfoReq{
+		UserID:   userID,
+		UserName: req.UserName,
+		Email:    req.Email,
+		Phone:    req.Phone,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	resp = &types.UserInfoResp{
-		UserInfo: types.User{
-			UserID:   getUserInfoLogic.User.UserID,
-			UserName: getUserInfoLogic.User.UserName,
-			Email:    getUserInfoLogic.User.Email,
-			Phone:    getUserInfoLogic.User.Phone,
-		},
-	}
-
-	return resp, nil
+	return
 }

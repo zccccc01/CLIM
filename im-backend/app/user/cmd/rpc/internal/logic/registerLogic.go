@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"CLIM/app/user/cmd/rpc/internal/svc"
 	"CLIM/app/user/cmd/rpc/pb"
@@ -62,11 +63,13 @@ func (l *RegisterLogic) Register(in *pb.RegisterReq) (*pb.RegisterResp, error) {
 	}
 	// 4. 创建用户实例
 	user = model.User{
-		UserID:   userID.Bytes(), // 将 UUID 转换为字节切片存储
-		Username: in.UserName,
-		Password: string(hashedPassword), // 存储哈希后的密码
-		Email:    in.Email,
-		Phone:    in.Phone,
+		UserID:    userID.Bytes(), // 将 UUID 转换为字节切片存储
+		Username:  in.UserName,
+		Password:  string(hashedPassword), // 存储哈希后的密码
+		Email:     in.Email,
+		Phone:     in.Phone,
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
 	}
 	// 5. 插入用户数据到数据库
 	if err := l.svcCtx.DB.Create(&user).Error; err != nil {

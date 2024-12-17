@@ -16,6 +16,12 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
+				// change pwd
+				Method:  http.MethodPut,
+				Path:    "/changePwd",
+				Handler: usercenter.ChangePwdHandler(serverCtx),
+			},
+			{
 				// login
 				Method:  http.MethodPost,
 				Path:    "/login",
@@ -38,6 +44,30 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodGet,
 				Path:    "/info",
 				Handler: usercenter.GetUserInfoHandler(serverCtx),
+			},
+			{
+				// update user info
+				Method:  http.MethodPut,
+				Path:    "/info",
+				Handler: usercenter.UpdateUserInfoHandler(serverCtx),
+			},
+			{
+				// set userProfile
+				Method:  http.MethodPost,
+				Path:    "/user-profile",
+				Handler: usercenter.SetUserProfileHandler(serverCtx),
+			},
+			{
+				// get userProfile
+				Method:  http.MethodGet,
+				Path:    "/user-profile",
+				Handler: usercenter.GetUserProfileHandler(serverCtx),
+			},
+			{
+				// update userProfile
+				Method:  http.MethodPut,
+				Path:    "/user-profile",
+				Handler: usercenter.UpdateUserProfileHandler(serverCtx),
 			},
 		},
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),

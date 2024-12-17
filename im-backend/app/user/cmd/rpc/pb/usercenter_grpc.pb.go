@@ -19,10 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Usercenter_Register_FullMethodName      = "/pb.usercenter/register"
-	Usercenter_Login_FullMethodName         = "/pb.usercenter/login"
-	Usercenter_GetUser_FullMethodName       = "/pb.usercenter/getUser"
-	Usercenter_GenerateToken_FullMethodName = "/pb.usercenter/generateToken"
+	Usercenter_Register_FullMethodName          = "/pb.usercenter/register"
+	Usercenter_Login_FullMethodName             = "/pb.usercenter/login"
+	Usercenter_GetUser_FullMethodName           = "/pb.usercenter/getUser"
+	Usercenter_ChangePwd_FullMethodName         = "/pb.usercenter/changePwd"
+	Usercenter_UpdateUserInfo_FullMethodName    = "/pb.usercenter/updateUserInfo"
+	Usercenter_SetUserProfile_FullMethodName    = "/pb.usercenter/setUserProfile"
+	Usercenter_GetUserProfile_FullMethodName    = "/pb.usercenter/getUserProfile"
+	Usercenter_UpdateUserProfile_FullMethodName = "/pb.usercenter/updateUserProfile"
+	Usercenter_GenerateToken_FullMethodName     = "/pb.usercenter/generateToken"
 )
 
 // UsercenterClient is the client API for Usercenter service.
@@ -32,6 +37,11 @@ type UsercenterClient interface {
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*GetUserResp, error)
+	ChangePwd(ctx context.Context, in *ChangePwdReq, opts ...grpc.CallOption) (*ChangePwdResp, error)
+	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error)
+	SetUserProfile(ctx context.Context, in *SetUserProfileReq, opts ...grpc.CallOption) (*SetUserProfileResp, error)
+	GetUserProfile(ctx context.Context, in *GetUserProfileReq, opts ...grpc.CallOption) (*GetUserProfileResp, error)
+	UpdateUserProfile(ctx context.Context, in *UpdateUserProfileReq, opts ...grpc.CallOption) (*UpdateUserProfileResp, error)
 	GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error)
 }
 
@@ -73,6 +83,56 @@ func (c *usercenterClient) GetUser(ctx context.Context, in *GetUserReq, opts ...
 	return out, nil
 }
 
+func (c *usercenterClient) ChangePwd(ctx context.Context, in *ChangePwdReq, opts ...grpc.CallOption) (*ChangePwdResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ChangePwdResp)
+	err := c.cc.Invoke(ctx, Usercenter_ChangePwd_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoReq, opts ...grpc.CallOption) (*UpdateUserInfoResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateUserInfoResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) SetUserProfile(ctx context.Context, in *SetUserProfileReq, opts ...grpc.CallOption) (*SetUserProfileResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SetUserProfileResp)
+	err := c.cc.Invoke(ctx, Usercenter_SetUserProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) GetUserProfile(ctx context.Context, in *GetUserProfileReq, opts ...grpc.CallOption) (*GetUserProfileResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetUserProfileResp)
+	err := c.cc.Invoke(ctx, Usercenter_GetUserProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *usercenterClient) UpdateUserProfile(ctx context.Context, in *UpdateUserProfileReq, opts ...grpc.CallOption) (*UpdateUserProfileResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateUserProfileResp)
+	err := c.cc.Invoke(ctx, Usercenter_UpdateUserProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *usercenterClient) GenerateToken(ctx context.Context, in *GenerateTokenReq, opts ...grpc.CallOption) (*GenerateTokenResp, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GenerateTokenResp)
@@ -90,6 +150,11 @@ type UsercenterServer interface {
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	Login(context.Context, *LoginReq) (*LoginResp, error)
 	GetUser(context.Context, *GetUserReq) (*GetUserResp, error)
+	ChangePwd(context.Context, *ChangePwdReq) (*ChangePwdResp, error)
+	UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*UpdateUserInfoResp, error)
+	SetUserProfile(context.Context, *SetUserProfileReq) (*SetUserProfileResp, error)
+	GetUserProfile(context.Context, *GetUserProfileReq) (*GetUserProfileResp, error)
+	UpdateUserProfile(context.Context, *UpdateUserProfileReq) (*UpdateUserProfileResp, error)
 	GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error)
 	mustEmbedUnimplementedUsercenterServer()
 }
@@ -109,6 +174,21 @@ func (UnimplementedUsercenterServer) Login(context.Context, *LoginReq) (*LoginRe
 }
 func (UnimplementedUsercenterServer) GetUser(context.Context, *GetUserReq) (*GetUserResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (UnimplementedUsercenterServer) ChangePwd(context.Context, *ChangePwdReq) (*ChangePwdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangePwd not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserInfo(context.Context, *UpdateUserInfoReq) (*UpdateUserInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
+}
+func (UnimplementedUsercenterServer) SetUserProfile(context.Context, *SetUserProfileReq) (*SetUserProfileResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetUserProfile not implemented")
+}
+func (UnimplementedUsercenterServer) GetUserProfile(context.Context, *GetUserProfileReq) (*GetUserProfileResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserProfile not implemented")
+}
+func (UnimplementedUsercenterServer) UpdateUserProfile(context.Context, *UpdateUserProfileReq) (*UpdateUserProfileResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserProfile not implemented")
 }
 func (UnimplementedUsercenterServer) GenerateToken(context.Context, *GenerateTokenReq) (*GenerateTokenResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenerateToken not implemented")
@@ -188,6 +268,96 @@ func _Usercenter_GetUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Usercenter_ChangePwd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangePwdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).ChangePwd(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_ChangePwd_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).ChangePwd(ctx, req.(*ChangePwdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserInfo(ctx, req.(*UpdateUserInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_SetUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetUserProfileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).SetUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_SetUserProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).SetUserProfile(ctx, req.(*SetUserProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_GetUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserProfileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).GetUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_GetUserProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).GetUserProfile(ctx, req.(*GetUserProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Usercenter_UpdateUserProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserProfileReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsercenterServer).UpdateUserProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Usercenter_UpdateUserProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsercenterServer).UpdateUserProfile(ctx, req.(*UpdateUserProfileReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Usercenter_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GenerateTokenReq)
 	if err := dec(in); err != nil {
@@ -224,6 +394,26 @@ var Usercenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getUser",
 			Handler:    _Usercenter_GetUser_Handler,
+		},
+		{
+			MethodName: "changePwd",
+			Handler:    _Usercenter_ChangePwd_Handler,
+		},
+		{
+			MethodName: "updateUserInfo",
+			Handler:    _Usercenter_UpdateUserInfo_Handler,
+		},
+		{
+			MethodName: "setUserProfile",
+			Handler:    _Usercenter_SetUserProfile_Handler,
+		},
+		{
+			MethodName: "getUserProfile",
+			Handler:    _Usercenter_GetUserProfile_Handler,
+		},
+		{
+			MethodName: "updateUserProfile",
+			Handler:    _Usercenter_UpdateUserProfile_Handler,
 		},
 		{
 			MethodName: "generateToken",
